@@ -4,10 +4,14 @@
 
 
 // import our npm packages
-import cors from 'cors';
-import express from 'express';
-import mongoose from 'mongoose';
-import bodyParser from 'body-parser';
+// import cors from 'cors';
+// import express from 'express';
+// import mongoose from 'mongoose';
+// import bodyParser from 'body-parser';
+const cors = require('cors');
+const express = require('express');
+const mongoose = require ('mongoose');
+const bodyParser = require ('body-parser');
 
 // set up express router
 const app = express();
@@ -22,7 +26,7 @@ mongoose.connect(MONGODB_URI);
 app.use(bodyParser.json(), cors())
 
 // require-in our routes
-app.use(require('../route/auth-router'));
+app.use(require('../routes/user.routes.js'));
 
 app.all('*', (request, response) => {
   console.log('Returning a 404 from the catch-all route');
@@ -35,13 +39,13 @@ app.use(require('./error-middleware'));
 
 
 // export the start and stop variables that turn our server off and on and log what port we are on.
-export const start = () => {
+const start = modules.exports = () => {
   app.listen(PORT, () => {
     console.log('Listening on port: ${PORT}')
   })
 }
 
-export const stop = () => {
+const stop = module.exports = () => {
   app.close(PORT, () => {
     console.log('Shut down on port: ${PORT}')
   })
